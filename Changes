@@ -1,0 +1,7 @@
+Revision history for Perl extension SeqWare::Html.
+
+0.01  Fri Sep  1 11:40:27 2017
+	- original version; created by h2xs 1.23 with options
+		-AX SeqWare::Html
+    - Added some documentation to the module and shoehorned the existing code into the module structure (@morgantaschuk)
+

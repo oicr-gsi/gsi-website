@@ -1,0 +1,6 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/SeqWare-Html.t
+lib/SeqWare/Html.pm
