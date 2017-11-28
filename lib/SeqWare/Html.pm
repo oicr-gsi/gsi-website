@@ -10,7 +10,7 @@ our @ISA = qw(Exporter);
 
 use parent 'Exporter';
 our @EXPORT_OK =
-  qw(document, breadcrumbs, button, headings, p, panel, panelBody, panelList, table, tableHeader, tableHeaderNested, NAV_BROWSER, NAV_STATUS, NAV_RUNS, NAV_PROJECTS, NAV_INSTRUMENTS);
+  qw(document breadcrumbs button headings p panel panelBody panelList table tableHeader tableHeaderNested NAV_BROWSER NAV_STATUS NAV_RUNS NAV_PROJECTS NAV_INSTRUMENTS);
 
 our $VERSION = '0.01';
 
@@ -39,12 +39,15 @@ my @navLinks =
 # 3[Str]: path to the root directory on the webserver
 # 4[Str<HTML>]: the contents of the page body
 sub document {
-    my ( $pageTitle, $activeTab, $pathToRoot, $contents ) = @_;
+    my ( $pageTitle, $activeTab, $pathToRoot, $contents, $customHead ) = @_;
 
     my $dateGenerated = localtime;
     my $cmd_string    = join( " ", @ARGV );
     my $cwd           = Cwd::cwd();
 
+    my $css=populate_css("$pathToRoot/res/css");
+    my $js=populate_js("$pathToRoot/res/js");
+    my $head="" if (!defined $customHead);
     my $html = <<EOI;
 <!DOCTYPE html>
 <html lang="en">
@@ -53,18 +56,18 @@ sub document {
 	<meta http-equiv="x-UA-Compatible" content="IE-edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Executed as: cd $cwd && $0 $cmd_string -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<link rel="stylesheet" href="$pathToRoot/res/css/gsi-common.css">
-	<script src="$pathToRoot/res/js/sorttable.js"></script>
+    $css
+    $js
+    $customHead
 	<link rel="shortcut icon" href="$pathToRoot/res/images/dna_helix.ico" />
-	
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	
+
 	<title>$pageTitle – SeqWare Browser</title>
 </head>
 
@@ -81,7 +84,7 @@ sub document {
 				</button>
 				<a class="navbar-brand" href="http://www-gsi.hpc.oicr.on.ca/landing/"><img alt="gsi" src="$pathToRoot/res/images/dna_helix.png" width="25px"></a>
 			</div>
-			
+
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
@@ -111,7 +114,7 @@ $contents
 		<p class="gsi-content">SeqWare Browser generated $dateGenerated.<br>
 		Brought to you by <a href="http://www-gsi.hpc.oicr.on.ca/landing/">Genome Sequence Informatics</a>.</p>
 	</div>
-	
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -121,6 +124,24 @@ $contents
 EOI
     return $html;
 }
+
+sub populate_css {
+    my $css_dir  = shift(@_);
+    my $css = <<OHAI;
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="$css_dir/gsi-common.css">
+OHAI
+    return $css;
+}
+
+sub populate_js {
+    my $js_dir = shift(@_);
+    my $js = <<OHAI;
+    <script src="$js_dir/sorttable.js"></script>
+OHAI
+    return $js;
+}
+
 
 # Create the link hierarchy to this page.
 # ...[Str<URL>, Str]: Pairs of URLs and labels for the items in the trail
