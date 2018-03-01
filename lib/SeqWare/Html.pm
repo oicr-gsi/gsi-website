@@ -1,6 +1,5 @@
 package SeqWare::Html;
 
-use 5.022001;
 use strict;
 use warnings;
 
