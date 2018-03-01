@@ -1,0 +1,4 @@
+dist: trusty
+language: perl
+
+install: perl Makefile.PL && make && make test && make install
