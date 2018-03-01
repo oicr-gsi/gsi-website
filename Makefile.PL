@@ -1,4 +1,5 @@
-use 5.022001;
+#!/usr/bin/env perl
+
 use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.

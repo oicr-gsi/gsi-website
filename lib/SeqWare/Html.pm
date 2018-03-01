@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 package SeqWare::Html;
 
 use strict;
