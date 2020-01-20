@@ -22,7 +22,7 @@ use Cwd;
 use Time::Local;
 
 use constant NAV_BROWSER =>
-  { name => "SeqWare Browser", file => "seqwareBrowser.html" };
+  { name => "Niassa Browser", file => "seqwareBrowser.html" };
 use constant NAV_STATUS =>
   { name => "Current Status", file => "../seqwareReport/seqwareReport.html" };
 use constant NAV_RUNS => { name => "Runs", file => "runReports.html" };
@@ -69,7 +69,7 @@ sub document {
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-	<title>$pageTitle – SeqWare Browser</title>
+	<title>$pageTitle – Niassa Browser</title>
 </head>
 
 <body>
@@ -112,7 +112,7 @@ EOI
 $contents
 	</div>
 	<div id="footer">
-		<p class="gsi-content">SeqWare Browser generated $dateGenerated.<br>
+		<p class="gsi-content">Niassa Browser generated $dateGenerated.<br>
 		Brought to you by <a href="http://www-gsi.hpc.oicr.on.ca/landing/">Genome Sequence Informatics</a>.</p>
 	</div>
 
